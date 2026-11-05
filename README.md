@@ -1,3 +1,14 @@
+> 这是 [GregoryConrad/native_toolchain_rust](https://github.com/GregoryConrad/native_toolchain_rust) 的 fork
+> （基于上游 `native_toolchain_rust-v1.0.7`），只为一个平台上的两个问题改动，全部在
+> `native_toolchain_rust/lib/src/build_environment.dart`：
+>
+> 1. Android 的 clang 驱动按应用的 `minSdk` 选（上游写死 `${triple}35-clang`），
+>    否则按高 API 级别取系统库桩，装到低版本设备上会 `cannot locate symbol`；
+> 2. 链接参数加 `-C link-arg=-Wl,--pack-dyn-relocs=none`，禁止 lld 把相对重定位压成
+>    RELR 表项——Android 11 以下的加载器不认识它，`.so` 加载后第一次解引用就 SIGSEGV。
+>
+> 拟声通过 `dependency_overrides` 用这个 fork 编译 `super_native_extensions` 与
+> `irondash_engine_context` 的 Rust 库。升级上游时把这两处改动重新套一遍即可。
 # 🧱 `native_toolchain_rust` 🦀
 
 [![Build Status](https://github.com/GregoryConrad/native_toolchain_rust/actions/workflows/build.yml/badge.svg)](https://github.com/GregoryConrad/native_toolchain_rust/actions)

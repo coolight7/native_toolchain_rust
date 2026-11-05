@@ -1,3 +1,8 @@
+## fork 改动
+
+* Android：clang 驱动按应用的 `minSdk` 选，并给 `CARGO_TARGET_<TRIPLE>_RUSTFLAGS` 加
+  `-C link-arg=-Wl,--pack-dyn-relocs=none`，让 Rust 动态库能在 Android 11 以下加载。
+  详见 README 顶部的说明。
 ## 1.0.7
 
  - **FIX**: don't throw error when lib.name is null ([#104](https://github.com/GregoryConrad/native_toolchain_rust/issues/104)).
